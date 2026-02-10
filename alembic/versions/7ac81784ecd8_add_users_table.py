@@ -23,11 +23,13 @@ def upgrade() -> None:
     sa.column('id', sa.Integer(), nullable=False, primary_key=True),
     sa.column('email', sa.String(), nullable=False, unique=True),
     sa.column('password', sa.String(), nullable=False),
-    sa.column('created_at', sa.TIMESTAMP(timezone=True), nullable=False, server_default= sa.text('now()'))
+    sa.column('created_at', sa.TIMESTAMP(timezone=True), nullable=False, server_default= sa.text('now()')),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('email')
     )
     pass
 
 
 def downgrade() -> None:
-    """Downgrade schema."""
+    op.drop_table('users')
     pass

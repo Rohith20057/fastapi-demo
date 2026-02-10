@@ -1,15 +1,25 @@
-from fastapi import FastAPI 
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from . import models
 from .database import engine  
 from .routers import post, user , auth , vote
 from .config import settings
 
-print(settings.database_password)
+#cors policy is used to allow the frontend to access the backend 
+#cors policy used to communicate the locathost in the other websites (backend in one website and api from another website)
+# models.Base.metadata.create_all(blind=engine)
 
-
-models.Base.metadata.create_all(bind=engine)
+origins = ["https://www.google.com","https://www.youtube.com","http://localhost:3000","http://localhost:8000"]
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,         
+    allow_origins= origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 
@@ -37,7 +47,7 @@ app.include_router(vote.router)
 
 @app.get("/")
 async def root():
-    return {"message": "Hello baby  how are you"}
+    return {"message": "Hello world"}
 
 # @app.get("/sqlalchamy")
 # def test_posts(db: Session = Depends(get_db)):
