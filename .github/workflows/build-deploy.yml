@@ -7,5 +7,6 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: pulling git repo
-                
-    
+              uses: actions/checkout@v2
+            - name: say hi to marthanda & jaya
+              run: echo "hi marthanda & jaya"
